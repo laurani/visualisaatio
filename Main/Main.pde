@@ -31,13 +31,15 @@ void draw() {
   background(50);
 
   // Piirtää valitut nimet
-  int y = 100;
+  int y = 80;
   for (int i = 0; i < entries.size(); i++) {
     textAlign(LEFT);
     text(entries.get(i).getName(), 250, y);
     y = y + spacing;
   }
-
+  text(yearFrom, 20, 600);
+  text(yearTo, 190, 600);
+  
   if (tvp) draw_tVp();
   if (tvm) draw_tVm();
 }

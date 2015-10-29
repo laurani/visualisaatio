@@ -33,7 +33,7 @@ void time_v_money_viz() {
 
 void draw_tVm() {
   pushMatrix();
-  translate(350, 0);
+  //translate(350, 0);
   background(bgColor);
 
   fill(textColor);

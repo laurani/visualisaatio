@@ -5,21 +5,23 @@ ArrayList<String> names = new ArrayList<String>();
 int[] nameY;
 
 void time_v_people_viz() {
+  /*
   loadTo_tVp.add("Elizabeth Taylor");
-  loadTo_tVp.add("Christian Bale");
-  loadTo_tVp.add("Al Pacino");
-  loadTo_tVp.add("Gary Oldman");
-  loadTo_tVp.add("Robert De Niro");
-  loadTo_tVp.add("Jennifer Lawrence");
-  loadTo_tVp.add("Humphrey Bogart");
-  loadTo_tVp.add("Alfred Hitchcock");
-  loadTo_tVp.add("Martin Scorsese");
-  loadTo_tVp.add("Steven Spielberg");
-  
+   loadTo_tVp.add("Christian Bale");
+   loadTo_tVp.add("Al Pacino");
+   loadTo_tVp.add("Gary Oldman");
+   loadTo_tVp.add("Robert De Niro");
+   loadTo_tVp.add("Jennifer Lawrence");
+   loadTo_tVp.add("Humphrey Bogart");
+   loadTo_tVp.add("Alfred Hitchcock");
+   loadTo_tVp.add("Martin Scorsese");
+   loadTo_tVp.add("Steven Spielberg");
+   */
+  for (Actor a : entries) loadTo_tVp.add(a.getName());
   checkNames(actors);
   checkNames(actresses);
   checkNames(directors);
-  
+
   nameY = new int[names.size()];
   for (int i = 0; i < names.size(); i++) nameY[i] = 0;
 }
@@ -47,47 +49,72 @@ void checkNames(HashMap<String, Actor> group) {
     }
   }
 }
+/*
+void addToTvp(Actor a) {
+  ArrayList<Movie> movies = a.getMovies();
+  int earliest = 3000;
+  int latest = 1900;
 
-void draw_tVp() {
-  int earliest = Collections.min(first_year);
-  int latest = Collections.max(last_year);
-  int dif = (latest - earliest) / 2;
-  int scl = 1;//dif / height;
-  int offset_y = height / 10;
-  int offset_x = 50;//width / names.size() - 10;
-  
-  strokeWeight(10);
-  strokeCap(PROJECT);
-  stroke(255);
-  PFont font = createFont("Calibri", 10);
-  textFont(font);
-  textAlign(CENTER);
-  fill(255);
-  
-  for (int i = 0; i < names.size(); i++) {
-
-    int x = width / 2 - names.size() * offset_x / 2 + i * offset_x;
-    int f = first_year.get(i);
-    int l = last_year.get(i);
-    int origper2 = (l - f) / 2;
-    int scaling = (scl*(l - f) / 2) - origper2;
-    
-    int y0 = f - earliest + scaling;
-    int y1 = y0 + (l - f) + scaling;
-    int y0_rev = (height - y0);
-    int y1_rev = (height - y1);
-    
-    int name_y = checkHeight(y0_rev + 50, i);
-    nameY[i] = (name_y);
-    
-    pushMatrix();
-    translate(100, -((height / 2) - dif));
-    text(names.get(i), x, name_y);
-    line(x, y0_rev, x, y1_rev);
-    popMatrix();
+  for (Movie m : movies) {
+    if (m.getYear() < earliest) {
+      earliest = m.getYear();
+    }
+    if (m.getYear() > latest) {
+      latest = m.getYear();
+    }
   }
-  textFont(f1);
-  textAlign(LEFT);
+  names.add(a.getName());
+  first_year.add(earliest);
+  last_year.add(latest);
+
+  int[] dummy = new int[names.size()];
+  for (int i = 0; i < names.size(); i++) dummy[i] = nameY[i];
+  nameY[names.size() - 1] = 0;
+  nameY = dummy;
+}
+*/
+void draw_tVp() {
+  if (!entries.isEmpty()) {
+    int earliest = Collections.min(first_year);
+    int latest = Collections.max(last_year);
+    int dif = (latest - earliest) / 2;
+    int scl = 1;//dif / height;
+    int offset_y = height / 10;
+    int offset_x = 50;//width / names.size() - 10;
+
+    strokeWeight(10);
+    strokeCap(PROJECT);
+    stroke(255);
+    PFont font = createFont("Calibri", 10);
+    textFont(font);
+    textAlign(CENTER);
+    fill(255);
+
+    for (int i = 0; i < names.size(); i++) {
+
+      int x = width / 2 - names.size() * offset_x / 2 + i * offset_x;
+      int f = first_year.get(i);
+      int l = last_year.get(i);
+      int origper2 = (l - f) / 2;
+      int scaling = (scl*(l - f) / 2) - origper2;
+
+      int y0 = f - earliest + scaling;
+      int y1 = y0 + (l - f) + scaling;
+      int y0_rev = (height - y0);
+      int y1_rev = (height - y1);
+
+      int name_y = checkHeight(y0_rev + 50, i);
+      nameY[i] = (name_y);
+
+      pushMatrix();
+      translate(100, -((height / 2) - dif));
+      text(names.get(i), x, name_y);
+      line(x, y0_rev, x, y1_rev);
+      popMatrix();
+    }
+    textFont(f1);
+    textAlign(LEFT);
+  }
 }
 
 int checkHeight(int p, int c) {
@@ -101,4 +128,12 @@ int checkHeight(int p, int c) {
     }
   }
   return name_y;
+}
+
+void clear_tvp() {
+  loadTo_tVp.clear();
+  names.clear();
+  first_year.clear();
+  last_year.clear();
+  
 }

@@ -1,6 +1,8 @@
 HashMap<String, ArrayList<Movie>> in_time_limit = new HashMap<String, ArrayList<Movie>>();
+HashMap<String, ArrayList<Movie>> in_time_limit_entries = new HashMap<String, ArrayList<Movie>>();
 
-void doTime(HashMap<String, Actor> group, int f, int t) {
+// Aikarajan asettamiseen näytettävässä infossa
+void setTimeLimitFromMap(HashMap<String, Actor> group, int f, int t) {
   ArrayList<Movie> movies_in_time = new ArrayList<Movie>();
   int from = f;
   int to = t;
@@ -9,6 +11,7 @@ void doTime(HashMap<String, Actor> group, int f, int t) {
     String name = entry.getKey();
     Actor person = entry.getValue();
     ArrayList<Movie> movies = person.getMovies();
+    
     for (Movie m : movies) {
       int year = m.getYear();
       if (year >= from && year <= to) {
@@ -16,5 +19,24 @@ void doTime(HashMap<String, Actor> group, int f, int t) {
       }
     }
     in_time_limit.put(name, movies_in_time);
+  }
+}
+
+void setTimeLimitFromList(ArrayList<Actor> group, int f, int t) {
+  ArrayList<Movie> movies_in_time = new ArrayList<Movie>();
+  int from = f;
+  int to = t;
+
+  for (Actor a : group) {
+    String name = a.getName();
+    ArrayList<Movie> movies = a.getMovies();
+    
+    for (Movie m : movies) {
+      int year = m.getYear();
+      if (year >= from && year <= to) {
+        movies_in_time.add(m);
+      }
+    }
+    in_time_limit_entries.put(name, movies_in_time);
   }
 }

@@ -53,7 +53,8 @@ class Actor {
 
     popMatrix();
   }
-
+  
+  // Järjestää leffat vuosijärjestykseen
   ArrayList<Movie> arrangeMovies(ArrayList<Movie> mov) {
     Movie[] arr = mov.toArray(new Movie[mov.size()]);
     for (int i = 0; i < arr.length - 1; i++) {

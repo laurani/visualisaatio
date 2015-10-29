@@ -1,21 +1,41 @@
 ArrayList<Actor> entries = new ArrayList<Actor>();
 ControlP5 cp5;
-PFont f1, f2;
+PFont f1, f2, f3;
 MenuList menulist;
+Range yearsToShow;
+int yearFrom = 1913;
+int yearTo = 2015;
 
 void init_menu() {
   f1 = createFont("Calibri", 16);
   f2 = createFont("Calibri", 12, true);
+  f3 = createFont("Calibri", 10);
   textFont(f1);
 
   cp5 = new ControlP5(this);
-  ControlFont cf = new ControlFont(f2,241);
+  ControlFont cf = new ControlFont(f2, 241);
+  ControlFont cf2 = new ControlFont(f3, 200);
+
   cp5.addTextfield("")
     .setPosition(20, 20)
     .setSize(200, 30)
     .setFont(f1)
     .setColor(color(255))
     ;
+
+  /*cp5.addTextfield("From year")
+   .setPosition(20, 550)
+   .setSize(95, 30)
+   .setFont(f1)
+   .setColor(color(255))
+   ;
+   
+   cp5.addTextfield("To year")
+   .setPosition(125, 550)
+   .setSize(95, 30)
+   .setFont(f1)
+   .setColor(color(255))
+   ;*/
 
   cp5.addBang("clear")
     .setPosition(240, 20)
@@ -46,34 +66,50 @@ void init_menu() {
     .setSize(95, 40)
     .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
     ;
-  
+
+  yearsToShow = cp5.addRange("Years")
+    .setBroadcast(false) 
+    .setPosition(20, 550)
+    .setSize(200, 30)
+    .setHandleSize(20)
+    .setRange(1913, 2015)
+    .setRangeValues(1913, 2015)
+    .setBroadcast(true)
+    .setColorForeground(color(255, 40))
+    .setColorBackground(color(255, 40))  
+    ;
+
   style("clear", cf);
   style("directors", cf);
   style("producers", cf);
   style("actors", cf);
   style("actresses", cf);
-  
+  //style("To year", cf);
+  //style("From year", cf);
+  style("Years", cf);
+
   cp5.setColorForeground(0xff0099CC);
   cp5.setColorBackground(0xff336699);
   //cp5.setColorLabel(0xffdddddd);
   //cp5.setColorValue(0xffff88ff);
   cp5.setColorActive(0xff66CCFF);
-  
+
   menulist = new MenuList( cp5, "menu", 200, 360 );
   menulist.setPosition(20, 80);
 }
 
 void style(String s, ControlFont f) {
   cp5.getController(s)
-     .getCaptionLabel()
-     .setFont(f)
-     .toUpperCase(false)
-     .setSize(14)
-     ;
+    .getCaptionLabel()
+    .setFont(f)
+    .toUpperCase(false)
+    .setSize(14)
+    ;
 }
 
 public void clear() {
   entries.clear();
+  clear_tvp();
 }
 
 public void directors() {
@@ -92,6 +128,13 @@ public void producers() {
   menulist.loadToMenu(producers);
 }
 
+boolean notInEntries(String name) {
+  for (Actor a : entries) {
+    if (a.getName().equals(name)) return false;
+  }
+  return true;
+}
+
 
 ////////////////////////////////////////////////////////////// älä koske tän jälkeen jos et oo varma
 
@@ -101,16 +144,25 @@ public void producers() {
 void controlEvent(ControlEvent theEvent) {
   if (theEvent.isAssignableFrom(Textfield.class)) {
     String n = theEvent.getStringValue();
-    if (all.keySet().contains(n)) {
+    if (all.keySet().contains(n) && notInEntries(n)) {
       entries.add(all.get(n));
       setYears();
-  }
+      if (tvp) time_v_people_viz(); //addToTvp(all.get(n));
+    }
   }
   if (theEvent.isFrom("menu")) {
     int index = Math.round(theEvent.getValue());
     String n = menulist.getItem(index);
-    entries.add(all.get(n));
-    setYears();
+    if (notInEntries(n)) {
+      entries.add(all.get(n));
+      setYears();
+      if (tvp) time_v_people_viz(); //addToTvp(all.get(n));
+    }
+  }
+  if (theEvent.isFrom("Years")) {
+    yearFrom = int(theEvent.getController().getArrayValue(0));
+    yearTo = int(theEvent.getController().getArrayValue(1));
+    setTimeLimitFromList(entries, yearFrom, yearTo);
   }
 }
 
