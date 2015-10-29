@@ -7,9 +7,9 @@ int yearFrom = 1913;
 int yearTo = 2015;
 
 void init_menu() {
-  f1 = createFont("Calibri", 16);
+  f1 = createFont("Calibri", 16, true);
   f2 = createFont("Calibri", 12, true);
-  f3 = createFont("Calibri", 10);
+  f3 = createFont("Calibri", 10, true);
   textFont(f1);
 
   cp5 = new ControlP5(this);
@@ -38,7 +38,7 @@ void init_menu() {
    ;*/
 
   cp5.addBang("clear")
-    .setPosition(240, 20)
+    .setPosition(20, 620)
     .setSize(200, 30)
     .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
     ;
@@ -76,7 +76,8 @@ void init_menu() {
     .setRangeValues(1913, 2015)
     .setBroadcast(true)
     .setColorForeground(color(255, 40))
-    .setColorBackground(color(255, 40))  
+    .setColorBackground(color(255, 40))
+    .setLabelVisible(false)
     ;
 
   style("clear", cf);
@@ -90,8 +91,6 @@ void init_menu() {
 
   cp5.setColorForeground(0xff0099CC);
   cp5.setColorBackground(0xff336699);
-  //cp5.setColorLabel(0xffdddddd);
-  //cp5.setColorValue(0xffff88ff);
   cp5.setColorActive(0xff66CCFF);
 
   menulist = new MenuList( cp5, "menu", 200, 360 );
@@ -146,7 +145,7 @@ void controlEvent(ControlEvent theEvent) {
     String n = theEvent.getStringValue();
     if (all.keySet().contains(n) && notInEntries(n)) {
       entries.add(all.get(n));
-      setYears();
+      setLimits();
       if (tvp) time_v_people_viz(); //addToTvp(all.get(n));
     }
   }
@@ -155,7 +154,7 @@ void controlEvent(ControlEvent theEvent) {
     String n = menulist.getItem(index);
     if (notInEntries(n)) {
       entries.add(all.get(n));
-      setYears();
+      setLimits();
       if (tvp) time_v_people_viz(); //addToTvp(all.get(n));
     }
   }
@@ -195,6 +194,11 @@ class MenuList extends Controller<MenuList> {
           menu.endDraw();
         }
         pg.image(menu, 0, -10);
+        textFont(f1);
+    fill(255);
+    text(yearFrom, 30, 518);
+    text(yearTo, 200, 518);
+    
       }
     }
     );

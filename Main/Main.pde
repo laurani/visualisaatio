@@ -9,11 +9,12 @@ int spacing = 20;
 boolean load_money = false; // Näistä kolmesta vain yks true kerralla
 boolean load_ratings = false;
 boolean load_money_ratings = true;
-boolean tvp = true; // visualisoinnin valinta
-boolean tvm = false;
+boolean tvp = false; // visualisoinnin valinta
+boolean tvm = true;
 
 void settings() {
-  size(1280, 750);
+  fullScreen();
+  //size(1280, 750);
   //pixelDensity(displayDensity());  // Retina-näyttöä varten - Kusee jotkin fontit jotenkin
 }
 
@@ -33,12 +34,10 @@ void draw() {
   // Piirtää valitut nimet
   int y = 80;
   for (int i = 0; i < entries.size(); i++) {
-    textAlign(LEFT);
+    textAlign(RIGHT);
     text(entries.get(i).getName(), 250, y);
     y = y + spacing;
   }
-  text(yearFrom, 20, 600);
-  text(yearTo, 190, 600);
   
   if (tvp) draw_tVp();
   if (tvm) draw_tVm();

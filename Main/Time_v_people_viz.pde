@@ -5,18 +5,6 @@ ArrayList<String> names = new ArrayList<String>();
 int[] nameY;
 
 void time_v_people_viz() {
-  /*
-  loadTo_tVp.add("Elizabeth Taylor");
-   loadTo_tVp.add("Christian Bale");
-   loadTo_tVp.add("Al Pacino");
-   loadTo_tVp.add("Gary Oldman");
-   loadTo_tVp.add("Robert De Niro");
-   loadTo_tVp.add("Jennifer Lawrence");
-   loadTo_tVp.add("Humphrey Bogart");
-   loadTo_tVp.add("Alfred Hitchcock");
-   loadTo_tVp.add("Martin Scorsese");
-   loadTo_tVp.add("Steven Spielberg");
-   */
   for (Actor a : entries) loadTo_tVp.add(a.getName());
   checkNames(actors);
   checkNames(actresses);
@@ -113,7 +101,7 @@ void draw_tVp() {
       popMatrix();
     }
     textFont(f1);
-    textAlign(LEFT);
+    textAlign(RIGHT);
   }
 }
 

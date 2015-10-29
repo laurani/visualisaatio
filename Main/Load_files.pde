@@ -53,7 +53,7 @@ void readFiles(String[] file, HashMap<String, Actor> target, boolean readMoney, 
   for (String i : file) {
     if (nextactor) {
       String line = i.trim();
-      cur = new Actor(line, color(255, 255, 255));
+      cur = new Actor(line, createColor());
       if (!target.keySet().contains(line)) target.put(line, cur);
       nextactor = false;
     } else if (i.isEmpty()) {
