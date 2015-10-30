@@ -37,30 +37,7 @@ void checkNames(HashMap<String, Actor> group) {
     }
   }
 }
-/*
-void addToTvp(Actor a) {
-  ArrayList<Movie> movies = a.getMovies();
-  int earliest = 3000;
-  int latest = 1900;
 
-  for (Movie m : movies) {
-    if (m.getYear() < earliest) {
-      earliest = m.getYear();
-    }
-    if (m.getYear() > latest) {
-      latest = m.getYear();
-    }
-  }
-  names.add(a.getName());
-  first_year.add(earliest);
-  last_year.add(latest);
-
-  int[] dummy = new int[names.size()];
-  for (int i = 0; i < names.size(); i++) dummy[i] = nameY[i];
-  nameY[names.size() - 1] = 0;
-  nameY = dummy;
-}
-*/
 void draw_tVp() {
   if (!entries.isEmpty()) {
     int earliest = Collections.min(first_year);

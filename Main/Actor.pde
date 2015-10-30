@@ -32,7 +32,7 @@ class Actor {
 
     // Line from y-axis to first movie
     Movie m0 = this.movies.get(0);
-    if (m0.getYear() > yearFrom && m0.getYear() < yearTo) {
+    if (m0.getYear() > firstYear && m0.getYear() < lastYear) {
       int x0 = getMovieX(m0);
       int y0 = getMovieY(m0);
       line(x0, h+margin, x0, y0);
@@ -43,7 +43,7 @@ class Actor {
       Movie mov1 = this.graphMovies.get(r);
       Movie mov2 = this.graphMovies.get(r+1);
 
-      if (mov1.getYear() > yearFrom && mov2.getYear() < yearTo) {
+      if (mov1.getYear() > firstYear && mov2.getYear() < lastYear) {
         int x0 = getMovieX(mov1);
         int y0 = getMovieY(mov1);
         int x1 = getMovieX(mov2);
@@ -56,7 +56,7 @@ class Actor {
     // Line from last element in graphMovies to last element in movies
     Movie last_graph = this.graphMovies.get(this.graphMovies.size()-1);
     Movie last_movie = this.movies.get(this.movies.size()-1);
-    if (last_graph.getYear() > yearFrom && last_movie.getYear() < yearTo) {
+    if (last_graph.getYear() > firstYear && last_movie.getYear() < lastYear) {
       int x0 = getMovieX(last_graph);
       int y0 = getMovieY(last_graph);
       int x1 = getMovieX(last_movie);
@@ -65,7 +65,7 @@ class Actor {
     }
 
     // Line from last movie to y-axis
-    if (last_movie.getYear() > yearFrom && last_movie.getYear() < yearTo) {
+    if (last_movie.getYear() > firstYear && last_movie.getYear() < lastYear) {
       int x1 = getMovieX(last_movie);
       int y1 = getMovieY(last_movie);
       line(x1, y1, x1, h+margin);
@@ -87,7 +87,7 @@ class Actor {
 
     fill(c);
     for (Movie m : this.movies) {
-      if (m.getYear() > yearFrom && m.getYear() < yearTo) {
+      if (m.getYear() > firstYear && m.getYear() < lastYear) {
         ellipse(getMovieX(m), getMovieY(m), 10, 10);
       }
     }
@@ -130,6 +130,7 @@ class Actor {
   }
 
   // Helper method for selectGrapPoints, removes productions with much smaller gross than previous and following productions from linegraph.
+  // Not working quite right (?)
   ArrayList<Movie> trimGraph(ArrayList<Movie> arr) {
     ArrayList<Movie> trimmed = new ArrayList<Movie>();
     trimmed.add(arr.get(0));

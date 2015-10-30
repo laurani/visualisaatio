@@ -1,4 +1,3 @@
-//Pidetään importit täällä niin helppo löytää kaikki
 import java.util.*;
 import java.text.Collator;
 import controlP5.*;
@@ -31,14 +30,6 @@ void setup() {
 void draw() {
   background(50);
 
-  // Piirtää valitut nimet
-  int y = 80;
-  for (int i = 0; i < entries.size(); i++) {
-    textAlign(RIGHT);
-    text(entries.get(i).getName(), 250, y);
-    y = y + spacing;
-  }
-  
   if (tvp) draw_tVp();
   if (tvm) draw_tVm();
 }

@@ -3,8 +3,6 @@ ControlP5 cp5;
 PFont f1, f2, f3;
 MenuList menulist;
 Range yearsToShow;
-int yearFrom = 1913;
-int yearTo = 2015;
 
 void init_menu() {
   f1 = createFont("Calibri", 16, true);
@@ -169,11 +167,9 @@ void controlEvent(ControlEvent theEvent) {
   if (theEvent.isFrom("Years")) {
     int s = int(theEvent.getController().getArrayValue(0));
     int e = int(theEvent.getController().getArrayValue(1));
-    yearFrom = s;
-    yearTo = e;
     firstYear = s;
     lastYear = e;
-    setTimeLimitFromList(entries, yearFrom, yearTo);
+    //setLimits();
   }
 }
 
@@ -208,8 +204,8 @@ class MenuList extends Controller<MenuList> {
         pg.image(menu, 0, -10);
         textFont(f1);
         fill(255);
-        text(yearFrom, 30, 518);
-        text(yearTo, 200, 518);
+        text(firstYear, 30, 518);
+        text(lastYear, 200, 518);
       }
     }
     );
@@ -237,7 +233,7 @@ class MenuList extends Controller<MenuList> {
 
     for (int i=i0; i<i1; i++) {
       String m = items.get(i);
-      menu.fill(255, 120);
+      menu.fill(#5C85AD, 180);
       menu.rect(0, 0, getWidth(), itemHeight-1 );
       menu.fill(255);
       menu.textFont(f1);

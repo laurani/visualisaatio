@@ -116,9 +116,8 @@ void setLimits() {
   lastYear = max+1;
   mostMoney = mon;
   
-  // Sets year slider scale from first movie to last movie among selected people.
+  // Sets year slider position from first movie to last movie among selected people.
   ((Range)cp5.getController("Years")).setRangeValues(min-1, max+1);
-  //((Range)cp5.getController("Years")).setRange(min-1, max+1);
 }
 
 color createColor() {
