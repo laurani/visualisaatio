@@ -26,7 +26,7 @@ color textColor = #F7F9FF;
 color[] dataColors = {#FF6B6B, #FFE66D, #4ECDC4, #7DDF64, #CC4FB1};
 
 // Skaalausta varten
-int firstYear = 1985;
+int firstYear = 2010;
 int lastYear = 2015;
 int amountOfYears = lastYear-firstYear;
 float mostMoney = 500000000.0;
@@ -115,13 +115,15 @@ void setLimits() {
   firstYear = min-1;
   lastYear = max+1;
   mostMoney = mon;
+  
+  // Sets year slider scale from first movie to last movie among selected people.
   ((Range)cp5.getController("Years")).setRangeValues(min-1, max+1);
-  ((Range)cp5.getController("Years")).setRange(min-1, max+1);
+  //((Range)cp5.getController("Years")).setRange(min-1, max+1);
 }
 
 color createColor() {
-  int a = ceil(random(0, 255));
-  int b = ceil(random(0, 255));
-  int c = ceil(random(0, 255));
+  int a = ceil(random(100, 255));
+  int b = ceil(random(100, 255));
+  int c = ceil(random(100, 255));
   return color(a, b, c);
 }

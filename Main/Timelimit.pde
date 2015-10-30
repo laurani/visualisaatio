@@ -11,7 +11,7 @@ void setTimeLimitFromMap(HashMap<String, Actor> group, int f, int t) {
     String name = entry.getKey();
     Actor person = entry.getValue();
     ArrayList<Movie> movies = person.getMovies();
-    
+
     for (Movie m : movies) {
       int year = m.getYear();
       if (year >= from && year <= to) {
@@ -30,7 +30,7 @@ void setTimeLimitFromList(ArrayList<Actor> group, int f, int t) {
   for (Actor a : group) {
     String name = a.getName();
     ArrayList<Movie> movies = a.getMovies();
-    
+
     for (Movie m : movies) {
       int year = m.getYear();
       if (year >= from && year <= to) {

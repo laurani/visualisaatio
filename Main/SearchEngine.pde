@@ -14,7 +14,6 @@ void init_menu() {
 
   cp5 = new ControlP5(this);
   ControlFont cf = new ControlFont(f2, 241);
-  ControlFont cf2 = new ControlFont(f3, 200);
 
   cp5.addTextfield("")
     .setPosition(20, 20)
@@ -22,20 +21,6 @@ void init_menu() {
     .setFont(f1)
     .setColor(color(255))
     ;
-
-  /*cp5.addTextfield("From year")
-   .setPosition(20, 550)
-   .setSize(95, 30)
-   .setFont(f1)
-   .setColor(color(255))
-   ;
-   
-   cp5.addTextfield("To year")
-   .setPosition(125, 550)
-   .setSize(95, 30)
-   .setFont(f1)
-   .setColor(color(255))
-   ;*/
 
   cp5.addBang("clear")
     .setPosition(20, 620)
@@ -159,8 +144,12 @@ void controlEvent(ControlEvent theEvent) {
     }
   }
   if (theEvent.isFrom("Years")) {
-    yearFrom = int(theEvent.getController().getArrayValue(0));
-    yearTo = int(theEvent.getController().getArrayValue(1));
+    int s = int(theEvent.getController().getArrayValue(0));
+    int e = int(theEvent.getController().getArrayValue(1));
+    yearFrom = s;
+    yearTo = e;
+    firstYear = s;
+    lastYear = e;
     setTimeLimitFromList(entries, yearFrom, yearTo);
   }
 }
@@ -195,10 +184,9 @@ class MenuList extends Controller<MenuList> {
         }
         pg.image(menu, 0, -10);
         textFont(f1);
-    fill(255);
-    text(yearFrom, 30, 518);
-    text(yearTo, 200, 518);
-    
+        fill(255);
+        text(yearFrom, 30, 518);
+        text(yearTo, 200, 518);
       }
     }
     );

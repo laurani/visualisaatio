@@ -1,4 +1,4 @@
-  //Pidetään importit täällä niin helppo löytää kaikki
+//Pidetään importit täällä niin helppo löytää kaikki
 import java.util.*;
 import java.text.Collator;
 import controlP5.*;
@@ -44,5 +44,7 @@ void draw() {
 }
 
 void test() {
-  for (Movie m : directors.get("Alfred Hitchcock").getMovies()) println(m.getTitle(), m.getYear());
+  //for (Movie m : directors.get("Alfred Hitchcock").getMovies()) println(m.getTitle(), m.getYear());
+  ArrayList<Movie> m = all.get("Anne Hathaway").graphMovies;
+  for (Movie mov : m) println(mov.getTitle(), mov.getYear(), mov.getGross());
 }

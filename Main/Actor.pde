@@ -1,5 +1,6 @@
 class Actor {
   ArrayList<Movie> movies = new ArrayList<Movie>();
+  ArrayList<Movie> graphMovies = new ArrayList<Movie>();
   String name;
   color c;
 
@@ -11,6 +12,7 @@ class Actor {
   void addMovie(Movie m) {
     this.movies.add(m);
     this.movies = arrangeMovies(this.movies);
+    graphMovies = selectGraphPoints();
   }
 
   String getName() {
@@ -26,19 +28,20 @@ class Actor {
     strokeWeight(5);
     noFill();
 
-
-
     // STRAIGHT LINES
+
+    // Line from y-axis to first movie
     Movie m0 = this.movies.get(0);
     if (m0.getYear() > yearFrom && m0.getYear() < yearTo) {
       int x0 = getMovieX(m0);
       int y0 = getMovieY(m0);
       line(x0, h+margin, x0, y0);
     }
-    
-    for (int r = 0; r < this.movies.size()-1; r++) {
-      Movie mov1 = this.movies.get(r);
-      Movie mov2 = this.movies.get(r+1);
+
+    // Lines between graph points
+    for (int r = 0; r < this.graphMovies.size()-1; r++) {
+      Movie mov1 = this.graphMovies.get(r);
+      Movie mov2 = this.graphMovies.get(r+1);
 
       if (mov1.getYear() > yearFrom && mov2.getYear() < yearTo) {
         int x0 = getMovieX(mov1);
@@ -49,11 +52,22 @@ class Actor {
         line(x0, y0, x1, y1);
       }
     }
-    
-    Movie m1 = this.movies.get(this.movies.size()-1);
-    if (m1.getYear() > yearFrom && m1.getYear() < yearTo) {
-      int x1 = getMovieX(m1);
-      int y1 = getMovieY(m1);
+
+    // Line from last element in graphMovies to last element in movies
+    Movie last_graph = this.graphMovies.get(this.graphMovies.size()-1);
+    Movie last_movie = this.movies.get(this.movies.size()-1);
+    if (last_graph.getYear() > yearFrom && last_movie.getYear() < yearTo) {
+      int x0 = getMovieX(last_graph);
+      int y0 = getMovieY(last_graph);
+      int x1 = getMovieX(last_movie);
+      int y1 = getMovieY(last_movie);
+      line(x0, y0, x1, y1);
+    }
+
+    // Line from last movie to y-axis
+    if (last_movie.getYear() > yearFrom && last_movie.getYear() < yearTo) {
+      int x1 = getMovieX(last_movie);
+      int y1 = getMovieY(last_movie);
       line(x1, y1, x1, h+margin);
     }
 
@@ -91,5 +105,49 @@ class Actor {
       arr[j] = dummy;
     }
     return new ArrayList<Movie>(Arrays.asList(arr));
+  }
+
+  // Select movies to draw lines between preventing zigzagging. Here the movie with largest gross is selected for each year.
+  ArrayList<Movie> selectGraphPoints() {
+    ArrayList<Movie> selected = new ArrayList<Movie>();
+    Iterator<Movie> films = this.movies.iterator();
+    Movie elect = (Movie)films.next();
+
+    while (films.hasNext()) {
+      Movie challenger = (Movie)films.next();
+
+      if (challenger.getYear() == elect.getYear()) {
+        if (challenger.getGross() > elect.getGross()) {
+          elect = challenger;
+        }
+      } else {
+        selected.add(elect);
+        elect = challenger;
+      }
+    }
+    if (selected.size() > 4) selected = trimGraph(selected);
+    return selected;
+  }
+
+  // Helper method for selectGrapPoints, removes productions with much smaller gross than previous and following productions from linegraph.
+  ArrayList<Movie> trimGraph(ArrayList<Movie> arr) {
+    ArrayList<Movie> trimmed = new ArrayList<Movie>();
+    trimmed.add(arr.get(0));
+    
+    int thisGross = int(arr.get(0).getGross());
+    int previousGross = 0;
+    int nextGross = int(arr.get(1).getGross());
+    boolean moveOn = true;
+
+    for (int i = 2; i < arr.size(); i++) {
+      if (moveOn) previousGross = thisGross;
+      thisGross = nextGross;
+      nextGross = int(arr.get(i).getGross());
+
+      if (!(thisGross < previousGross/3 && thisGross < nextGross/3)) {
+        trimmed.add(arr.get(i - 1));
+      }
+    }
+    return trimmed;
   }
 }
