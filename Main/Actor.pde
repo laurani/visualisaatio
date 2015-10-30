@@ -32,7 +32,7 @@ class Actor {
 
     // Line from y-axis to first movie
     Movie m0 = this.movies.get(0);
-    if (m0.getYear() > firstYear && m0.getYear() < lastYear) {
+    if (m0.getYear() > firstYear || m0.getYear() < lastYear) {
       int x0 = getMovieX(m0);
       int y0 = getMovieY(m0);
       line(x0, h+margin, x0, y0);
@@ -43,7 +43,7 @@ class Actor {
       Movie mov1 = this.graphMovies.get(r);
       Movie mov2 = this.graphMovies.get(r+1);
 
-      if (mov1.getYear() > firstYear && mov2.getYear() < lastYear) {
+      if (mov1.getYear() > firstYear || mov2.getYear() < lastYear) {
         int x0 = getMovieX(mov1);
         int y0 = getMovieY(mov1);
         int x1 = getMovieX(mov2);
@@ -56,7 +56,7 @@ class Actor {
     // Line from last element in graphMovies to last element in movies
     Movie last_graph = this.graphMovies.get(this.graphMovies.size()-1);
     Movie last_movie = this.movies.get(this.movies.size()-1);
-    if (last_graph.getYear() > firstYear && last_movie.getYear() < lastYear) {
+    if (last_graph.getYear() > firstYear || last_movie.getYear() < lastYear) {
       int x0 = getMovieX(last_graph);
       int y0 = getMovieY(last_graph);
       int x1 = getMovieX(last_movie);
@@ -65,7 +65,7 @@ class Actor {
     }
 
     // Line from last movie to y-axis
-    if (last_movie.getYear() > firstYear && last_movie.getYear() < lastYear) {
+    if (last_movie.getYear() > firstYear || last_movie.getYear() < lastYear) {
       int x1 = getMovieX(last_movie);
       int y1 = getMovieY(last_movie);
       line(x1, y1, x1, h+margin);
@@ -84,11 +84,29 @@ class Actor {
      endShape();
      
      */
-
+    
+    // Draw points on movies and a tooltip if cursor is over a point
     fill(c);
     for (Movie m : this.movies) {
       if (m.getYear() > firstYear && m.getYear() < lastYear) {
         ellipse(getMovieX(m), getMovieY(m), 10, 10);
+        
+        // Tooltip
+        if (abs(mouseX - getMovieX(m)) < 7 && abs(mouseY - getMovieY(m)) < 7) {
+          String s = m.getTitle() + " (" + str(m.getYear()) + ")  $" + str(m.getGross() / 1000000) + "M";
+          int x0 = width / 2;
+          int y0 = height - 40;
+          int ofs = 15;
+          
+          fill(255);
+          rectMode(CENTER);
+          rect(x0, y0, s.length() * 8, 30);
+          
+          textAlign(CENTER);
+          fill(0);
+          text(s, x0, y0 + 5);
+          textAlign(RIGHT);
+        }
       }
     }
   }
@@ -134,7 +152,7 @@ class Actor {
   ArrayList<Movie> trimGraph(ArrayList<Movie> arr) {
     ArrayList<Movie> trimmed = new ArrayList<Movie>();
     trimmed.add(arr.get(0));
-    
+
     int thisGross = int(arr.get(0).getGross());
     int previousGross = 0;
     int nextGross = int(arr.get(1).getGross());

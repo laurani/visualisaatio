@@ -1,17 +1,16 @@
 ArrayList<Actor> entries = new ArrayList<Actor>();
 ControlP5 cp5;
-PFont f1, f2, f3;
+PFont f1, f2;
 MenuList menulist;
 Range yearsToShow;
 
 void init_menu() {
   f1 = createFont("Calibri", 16, true);
-  f2 = createFont("Calibri", 12, true);
-  f3 = createFont("Calibri", 10, true);
+  f2 = createFont("Calibri", 14, true);
   textFont(f1);
 
   cp5 = new ControlP5(this);
-  ControlFont cf = new ControlFont(f2, 241);
+  ControlFont cf = new ControlFont(f1, 241);
 
   cp5.addTextfield("")
     .setPosition(20, 20)
