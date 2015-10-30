@@ -51,6 +51,18 @@ void init_menu() {
     .setSize(95, 40)
     .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
     ;
+    
+  cp5.addBang("visualization_1")
+    .setPosition(20, 675)
+    .setSize(95, 40)
+    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+    ;
+    
+  cp5.addBang("visualization_2")
+    .setPosition(125, 675)
+    .setSize(95, 40)
+    .getCaptionLabel().align(ControlP5.CENTER, ControlP5.CENTER)
+    ;
 
   yearsToShow = cp5.addRange("Years")
     .setBroadcast(false) 
@@ -70,8 +82,8 @@ void init_menu() {
   style("producers", cf);
   style("actors", cf);
   style("actresses", cf);
-  //style("To year", cf);
-  //style("From year", cf);
+  style("visualization_1", cf);
+  style("visualization_2", cf);
   style("Years", cf);
 
   cp5.setColorForeground(0xff0099CC);
@@ -110,6 +122,17 @@ public void actresses() {
 
 public void producers() {
   menulist.loadToMenu(producers);
+}
+
+public void visualization_1() {
+  tvm = true;
+  tvp = false;
+}
+
+public void visualization_2() {
+  tvp = true;
+  tvm = false;
+  time_v_people_viz();
 }
 
 boolean notInEntries(String name) {

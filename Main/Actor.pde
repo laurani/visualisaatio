@@ -144,10 +144,12 @@ class Actor {
       thisGross = nextGross;
       nextGross = int(arr.get(i).getGross());
 
-      if (!(thisGross < previousGross/3 && thisGross < nextGross/3)) {
+      if (!(thisGross < previousGross/2 && thisGross < nextGross/2)) {
         trimmed.add(arr.get(i - 1));
       }
     }
+    trimmed.add(arr.get(arr.size() - 1));
+    trimmed.add(movies.get(movies.size() - 1));
     return trimmed;
   }
 }
